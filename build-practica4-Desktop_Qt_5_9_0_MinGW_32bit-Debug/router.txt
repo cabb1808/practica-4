@@ -1,3 +1,4 @@
 AB4
 BC2
-DA3
+CA3
+EC10

@@ -100,7 +100,7 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: ../practica4/main.cpp 
+debug/main.o: ../practica4/main.cpp ../practica4/red.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\practica4\main.cpp
 
 debug/red.o: ../practica4/red.cpp ../practica4/red.h

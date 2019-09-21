@@ -7,4 +7,5 @@ int main()
 {
     red a;
     a.crearAdyacente();
+    a.crearMinimo();
 }
