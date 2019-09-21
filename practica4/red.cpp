@@ -1,9 +1,9 @@
 #include "red.h"
 #define INF 1215752192
 #define vacio 4294967295
-red::red()
+void red::obtenerRouters()
 {
-    fstream archin;
+    ifstream archin;
     string line;
     archin.open("router.txt");
     while(!archin.eof()){
@@ -37,7 +37,7 @@ void red::crearAdyacente()
            }
         }
     }
-    fstream archin;
+    ifstream archin;
     string line;
     archin.open("router.txt");
     while(!archin.eof()){
@@ -60,8 +60,8 @@ void red::crearAdyacente()
     archin.close();
     for(int i=0;i<cn;i++){
         for(int j=0;j<cn;j++){
-            cout<< adyacente[i][j];
-
+           if(adyacente[i][j]!=INF) cout<< adyacente[i][j]<<" ";
+            else cout<<0<<" ";
         }
         cout<<endl;
     }
@@ -86,7 +86,7 @@ void red::crearMinimo()
         cout<<endl;
         for(int i=0;i<cn;i++){
             for(int j=0;j<cn;j++){
-                cout<< minimos[i][j];
+                cout<< minimos[i][j]<<" ";
 
             }
             cout<<endl;
@@ -95,9 +95,37 @@ void red::crearMinimo()
 
 int red::nodoNum(char a)
 {
-    int num;
+    int num=-1;
     for(int i=0;i<cn;i++){
         if(routers[i]==a) num=i;
     }
     return num;
+}
+
+void red::agregarNodo(char a,char b, int num)
+{
+    fstream archof;
+    archof.open("router.txt",std::fstream::app);
+    string line;
+    line+=a;
+    line+=b;
+    line+=char(num+48);
+    archof<<line;
+}
+
+void red::eliminarNodo(char a)
+{
+    ifstream archin;
+    string line,arch;
+    archin.open("router.txt");
+    while(!archin.eof()){
+        getline(archin,line);
+        if(line.find(a)==vacio){
+            arch+=line;
+        }
+    }
+    archin.close();
+    ofstream archof;
+    archof.open("router.txt");
+    archof<<arch;
 }

@@ -14,10 +14,12 @@ private:
     vector< vector<char> > adyacenteChar,minimosChar;
     int cn; //cantidad de nodos
 public:
-    red();
+    void obtenerRouters();
     void crearAdyacente();
     void crearMinimo();
     int nodoNum(char a);
+    void agregarNodo(char a,char b,int num);
+    void eliminarNodo(char a);
 };
 
 #endif // RED_H
