@@ -1,38 +1,38 @@
 #include "red.h"
-
+#define INF 10000000*10000
 red::red()
 {
     fstream archin;
-    int a=0,cNum;
     string line;
-    char c,primer,segun;
     archin.open("router.txt");
-    for(int i = 0; i < cn; i++)
-           adyacente[i][i] = 0;
     while(!archin.eof()){
-        archin.get(c);
-        if(a==0){
-            if(routers.find(c)!=string::npos){
-                routers+=c;
+        getline(archin,line);
+        if(routers.find(line[0])==4294967295){
+            routers+=line[0];
             }
-            a++;
-            primer=c;
-        }
-        else if (a==1){
-            if(routers.find(c)!=string::npos){
-                routers+=c;
+        if(routers.find(line[1])==4294967295){
+            routers+=line[1];
             }
-            a++;
-            segun=c;
-        }
-        else if (a==2){
-            cNum=c-48;
-            adyacente[primer-65][segun-65]=cNum;
-        }
-        else a=0;
     }
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; i < 3; i++) cout<<adyacente[i][j]<< " ";
+    cn=routers.size();
+    archin.close();
+}
+
+void red::crearAdyacente()
+{
+    vector<int> a;
+    for(int i=0;i<cn;i++){
+        adyacente.push_back(a);
+        for(int j=0;j<cn;j++){
+           if(j==i)adyacente[i].push_back(0);
+           else adyacente[i].push_back(1);
+        }
+    }
+    for(int i=0;i<cn;i++){
+        for(int j=0;j<cn;j++){
+            cout<<adyacente[i][j];
+
+        }
         cout<<endl;
     }
 }
