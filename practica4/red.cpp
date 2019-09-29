@@ -1,6 +1,17 @@
 #include "red.h"
 #define INF 1215752192
 #define vacio 4294967295
+void red::minimo(char *a, char *b)
+{
+    int c=nodoNum(*a),d=nodoNum(*b);
+    char e;
+    if(d<c){
+        e=*a;
+        *a=*b;
+        *b=e;
+    }
+}
+
 void red::obtenerRouters()
 {
     ifstream archin;
@@ -60,8 +71,8 @@ void red::crearAdyacente()
     archin.close();
     for(int i=0;i<cn;i++){
         for(int j=0;j<cn;j++){
-           if(adyacente[i][j]!=INF) cout<< adyacente[i][j]<<" ";
-            else cout<<0<<" ";
+           if(adyacente[i][j]!=INF) cout<< adyacenteChar[j][i]<<" ";
+            else cout<<adyacenteChar[j][i]<<" ";
         }
         cout<<endl;
     }
@@ -80,13 +91,12 @@ void red::crearMinimo()
                     if( minimos[i][j] > dt){
                         minimos[i][j] = dt;
                         minimosChar[i][j]=char(k+65);
-
                     }
                 }
         cout<<endl;
         for(int i=0;i<cn;i++){
             for(int j=0;j<cn;j++){
-                cout<< minimos[i][j]<<" ";
+                cout<< minimosChar[j][i]<<" ";
 
             }
             cout<<endl;
@@ -129,3 +139,87 @@ void red::eliminarNodo(char a)
     archof.open("router.txt");
     archof<<arch;
 }
+
+void red::menu()
+{
+    int flag_=0;
+    while (flag_==0) {
+        int opcion;
+        string ingresado;
+        cout<<"Seleccione una opcion \n";
+        cout<<"\n 1. Ir de un router a otro \n";
+        cout<<"\n 2. Agregar un enrutador \n";
+        cout<<"\n 3. Eliminar un enrutador \n";
+        cout<<"\n 4. Agregar una conexion \n";
+        cout<<"\n 5. Eliminar una conexion \n";
+        cin>>opcion;
+
+        if(opcion==1){
+        cout<<"Ingrese que routers (ej. AB: camino de A hacia B): "; cin>>ingresado;
+        cout<<"El camino de menor costo es: ";
+        imprimirCamino(ingresado[0],ingresado[1]);
+        cout<<" y cuesta "<<minimos[nodoNum(ingresado[0])][nodoNum(ingresado[1])]<<endl;
+        }
+        else if(opcion==2){
+            fstream archin;
+            archin.open("router.txt",fstream::out|fstream::app);
+            string a="   ",b;
+            int s=0;
+            cout<<"Ingrese el nombre del Router: ";cin>>a[0];
+            while(s!=1){
+                cout<<"Ingrese la conexion: ";cin>>a[1];
+                cout<<" y su valor de conexion: ";cin>>a[2];
+                archin<<'\n'<<a;
+                cout<<"Ingrese 1 si desea agregar conexion a otro router";cin>>s;
+            }
+
+        }
+        else if(opcion==3){
+            ifstream archin;
+            archin.open("router.txt");
+            string a,b,c;
+            cout<<"Ingrese el nombre del Router: ";cin>>a;
+            while(!archin.eof()){
+                getline(archin,c);
+                if(c.find(a)==vacio) b+=c;
+            }
+            archin.close();
+
+            ofstream archof;
+            archof.open("router.txt");
+            archof<<b;
+        }
+        else if(opcion==4){
+
+        }
+        else if(opcion==5){
+
+        }
+        else flag_=1;
+
+
+    }
+
+
+
+    }
+
+void red::imprimirCamino(char a, char b)
+{
+    minimo(&a,&b);
+    string camino;
+    camino+=b;
+     for(char i=b;i!='0';){
+         i=minimosChar[nodoNum(b)][nodoNum(a)];
+         if(i!='0'){
+             camino+=i;
+             b=i;
+         }
+     }
+    cout<<camino.at(camino.size()-1);
+    for(int j=camino.size()-2;j>-1;j--){
+        cout<<"->"<<camino.at(j)<<" ";
+
+    }
+}
+

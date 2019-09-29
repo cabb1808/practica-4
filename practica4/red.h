@@ -13,6 +13,7 @@ private:
     vector< vector<unsigned int> > adyacente, minimos; //matriz con valor entre nodos que tengan conexion directa
     vector< vector<char> > adyacenteChar,minimosChar;
     int cn; //cantidad de nodos
+    void minimo(char *a, char *b);
 public:
     void obtenerRouters();
     void crearAdyacente();
@@ -20,6 +21,8 @@ public:
     int nodoNum(char a);
     void agregarNodo(char a,char b,int num);
     void eliminarNodo(char a);
+    void menu();
+    void imprimirCamino(char a, char b);
 };
 
 #endif // RED_H
